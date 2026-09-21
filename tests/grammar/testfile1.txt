@@ -1,0 +1,125 @@
+const int a = 123;
+int b = -1;
+
+int func1() {
+    return 1;
+}
+
+void func2(int x) {
+    static int j;
+    int temp = 2 * x;
+    j = j + 1;
+    printf("%d\n", j);
+    printf("%d\n", temp);
+}
+
+int func3(int x, int y, int z) {
+    return x + y + z;
+}
+
+void func4() {
+    printf("hello\n");
+    return;
+}
+
+int main() {
+    printf("24371079\n");
+    int c;
+    int d = 2;
+    const int e = 456;
+    int f = 3, g = 4, h = 5;
+    static int i = 6;
+    c = get_int();
+
+    {
+        int c = 888;
+        printf("%d\n", c);
+    }
+
+    printf("%d\n", c);
+
+    d = +1;
+    d = -1;
+    d = 1 + 2;
+    d = 2 - 1;
+    d = 1 * 2;
+    d = 2 / 1;
+    d = 1 % 2;
+    d = (1 + 2) * 3;
+    d = 1 + 2 * 3;
+    d = (1 + 2) / (1 + 1);
+    d = d + 4;
+    d = d - 1;
+    d = d * 2;
+    d = d / 2;
+    d = d % 2;
+    d = (d + 4) / (d + 1);
+    d = c + 1;
+    d = c + d;
+
+    printf("%d\n", f);
+    f = func1();
+    printf("%d\n", f);
+
+    func2(g);
+    func2(g);
+
+    int result = func3(f, g, h);
+    printf("%d\n", result);
+
+    func4();
+
+    ;
+
+    {
+    }
+
+    if (a > 0) {
+        printf("a is positive\n");
+    }
+
+    if (a > 0) {
+        if (a < 2) {
+            printf("a must be 1\n");
+        }
+    }
+
+    if (b > 0) {
+        printf("b is positive\n");
+    } else {
+        printf("b is non-positive\n");
+    }
+
+    c = 0;
+    while (c < 5) {
+        c = c + 1;
+    }
+
+    while (c < 10) {
+        c = c + 1;
+        if (c == 7) {
+            break;
+        }
+    }
+
+    while (c < 15) {
+        c = c + 1;
+        if (c == 12) {
+            continue;
+        }
+    }
+
+    if (c <= 0);
+
+    if (c >= 0);
+
+    if (c == 0);
+
+    if (c != 0);
+
+    c = +b;
+
+    c = -b;
+
+    return 0;
+}
