@@ -1,0 +1,59 @@
+int b[2];
+int c[3] = {1, 2, 3};
+const int e[3] = {1, 2, 3};
+
+char g[2];
+char h[3] = {'a', 'b', 'c'};
+const char j[3] = {'a', 'b', 'c'};
+const char k[6] = "hello";
+
+char aa;
+char bb = 'a';
+const char dd = 'a';
+
+void func1(int x[]) {
+    printf("%d\n", x[0]);
+}
+
+int func2(int x[], int y) {
+    int result = x[1] + y;
+    return result;
+}
+
+char func3(char x[]) {
+    return x[0];
+}
+
+int main() {
+    printf("24371079\n");
+    int l[2];
+    int m[3] = {1, 2, 3};
+    int mm, ll[3];
+    static int n[3] = {1, 2, 3};
+    const int o[3] = {1, 2, 3};
+    int oo[4] = {1, 2, 3};
+
+    char q[2];
+    char r[3] = {'a', 'b', 'c'};
+    static char s[3] = {'a', 'b', 'c'};
+    const char t[3] = {'a', 'b', 'c'};
+    char u[6] = "hello";
+
+    printf("%d %d %c\n", c[0], e[1], h[0]);
+    func1(m);
+
+    int i = 0;
+    printf("%d\n", c[i]);
+    printf("%d\n", c[i + 1]);
+
+    int result = func2(m, 5);
+    printf("%d\n", result);
+
+    int temp = func2(m, m[1]);
+
+    char ii = func3(r);
+
+    printf("%s", u);
+
+    return 0;
+}

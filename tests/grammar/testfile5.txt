@@ -1,0 +1,17 @@
+int func1() {
+    printf("111\n");
+    return 1;
+}
+
+int func2() {
+    printf("000\n");
+    return 0;
+}
+
+int main() {
+    printf("24371079\n");
+    if (1 && func1());
+    if (0 || func2());
+
+    return 0;
+}
