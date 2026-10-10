@@ -9,5 +9,5 @@ public enum TokenType {
     
     SWITCHTK, AND,
     
-    WRONGOP;
+    WRONGOPAND, WRONGOPOR, INDEXOUT;
 }

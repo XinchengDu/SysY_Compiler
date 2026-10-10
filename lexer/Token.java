@@ -1,7 +1,7 @@
 package lexer;
 
 public class Token {
-    private final TokenType type;
+    private TokenType type;
     private final String content;
     private final int lineNum;
 
@@ -21,5 +21,9 @@ public class Token {
 
     public int getNum() {
         return lineNum;
+    }
+
+    public void setType(TokenType type) {
+        this.type = type;
     }
 }

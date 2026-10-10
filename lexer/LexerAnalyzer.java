@@ -190,8 +190,8 @@ public class LexerAnalyzer {
             case "&&": return TokenType.AND;
             case "%": return TokenType.MOD;
             case "!": return TokenType.NOT;
-            case "&": return TokenType.WRONGOP;
-            case "|": return TokenType.WRONGOP;
+            case "&": return TokenType.WRONGOPAND;
+            case "|": return TokenType.WRONGOPOR;
 
             default:
                 return null;
