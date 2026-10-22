@@ -46,6 +46,17 @@ public class LexerAnalyzer {
                 scanDigit();
             }
 
+            else if (isSlash(current)) {
+                if (index + 1 < length && source.charAt(index + 1) == '/') {
+                    scanLineComment();
+                } else if (index + 1 < length && source.charAt(index + 1) == '*') {
+                    scanBlockComment();
+                } else {
+                    tokens.add(new Token(TokenType.DIV, "/", lineNum));
+                    index++;
+                }
+            }
+
             else if (isOperator(current)) {
                 scanOperater();
             }
@@ -234,6 +245,31 @@ public class LexerAnalyzer {
         tokens.add(new Token(TokenType.STRCON, text, lineNum));
     }
 
+    private void scanLineComment() {
+        index++;
+        while (index < length && source.charAt(index) != '\n') {
+            index++;
+        }
+    }
+
+    private void scanBlockComment() {
+        index += 2;
+        while (index < length) {
+            if (index + 1 < length
+                    && source.charAt(index) == '*'
+                    && source.charAt(index + 1) == '/') {
+                index += 2; // 跳过 */
+                return;
+            }
+
+            if (source.charAt(index) == '\n') {
+                lineNum++;
+            }
+
+            index++;
+        }
+    }
+
     private boolean isLetter(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
@@ -256,5 +292,9 @@ public class LexerAnalyzer {
 
     private boolean isBracket(char c) {
         return "()[]{}".indexOf(c) >= 0;
+    }
+
+    private boolean isSlash(char c) {
+        return c == '/';
     }
 }

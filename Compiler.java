@@ -3,6 +3,7 @@ import lexer.Token;
 import lexer.TokenType;
 
 import parser.*;
+import semantic.*;
 
 import static lexer.TokenType.AND;
 import static lexer.TokenType.OR;
@@ -33,6 +34,10 @@ public class Compiler {
         List<String> output = parser.analyze();
         AstNode root = parser.getRoot();
         collectSyntaxError(root, errors);
+
+        // 语义分析 
+        SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(root, errors);
+        List<Scope> allScopes = semanticAnalyzer.analyeze();
         
         sortErrors(errors);
 
@@ -42,6 +47,9 @@ public class Compiler {
                 );
                 BufferedWriter parserWriter = Files.newBufferedWriter(
                         Path.of("parser.txt"), StandardCharsets.UTF_8
+                );
+                BufferedWriter symbolWriter = Files.newBufferedWriter(
+                        Path.of("symbol.txt"), StandardCharsets.UTF_8
                 );
                 BufferedWriter errorWriter = Files.newBufferedWriter(
                         Path.of("error.txt"), StandardCharsets.UTF_8
@@ -60,6 +68,22 @@ public class Compiler {
             for (String line : output) {
                 parserWriter.write(line);
                 parserWriter.newLine();
+            }
+
+            // 语义输出
+            for (Scope scope : allScopes) {
+                for (Symbol symbol : scope.getSymbols()) {
+                    if (symbol.getLineNum() == 0) {
+                        continue;
+                    }
+
+                    symbolWriter.write(
+                            scope.getId() + " "
+                                    + symbol.getName() + " "
+                                    + symbol.getOutputTypeName()
+                    );
+                    symbolWriter.newLine();
+                }
             }
 
             // 错误输出

@@ -418,7 +418,7 @@ public class ParseRules {
          'switch' '(' Exp ')' '{' { CaseStmt } '}' // j
          'break' ';' | 'continue' ';' // i, m
          'return' [Exp] ';' // e, f, i
-         'printf' '(' StringConst { ',' Exp } ')' ';' // e, l
+         'printf' '(' StringConst { ',' Exp } ')' ';' // e, i, j, l
          */
 
         // 此处 Exp *→ LVal ，需单独区分
@@ -558,8 +558,30 @@ public class ParseRules {
                 stmtNode.addChildren(parseCOMMA());
                 stmtNode.addChildren(parseExp());
             }
-            stmtNode.addChildren(parseRPARENT());
-            stmtNode.addChildren(parseSEMICN());
+
+            if (isRPARENT()) {
+                stmtNode.addChildren(parseRPARENT());
+            }
+
+            else {
+                int line = tokens.get(index - 1).getNum();
+                Token missing = new Token(TokenType.RPARENT, ")", line);
+                AstNode jErrorNode = new AstNode(missing);
+                jErrorNode.isJError = true;
+                stmtNode.addChildren(jErrorNode);
+            }
+
+            if (isSEMICN()) {
+                stmtNode.addChildren(parseSEMICN());
+            }
+
+            else {
+                int line = tokens.get(index - 1).getNum();
+                Token missing = new Token(TokenType.SEMICN, ";", line);
+                AstNode iErrorNode = new AstNode(missing);
+                iErrorNode.isIError = true;
+                stmtNode.addChildren(iErrorNode);
+            }
         }
 
         else if (isExp()) {
