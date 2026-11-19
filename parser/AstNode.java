@@ -1,6 +1,7 @@
 package parser;
 import lexer.*;
 import static parser.PaserContext.*;
+import semantic.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class AstNode {
     public boolean isIError = false;
     public boolean isKError = false;
     public boolean isJError = false;
+    private Symbol symbol;
 
     public AstNode(String type) {
         this.type = type;
@@ -51,6 +53,14 @@ public class AstNode {
 
     public AstNode getFather() {
         return father;
+    }
+
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(Symbol symbol) {
+        this.symbol = symbol;
     }
 
     public void extractLValFromExp(AstNode expNode) {

@@ -124,6 +124,8 @@ public class SemanticAnalyzer {
 
         if (!symbolTable.define(symbol)) {
             errors.add(token.getNum() + " b");
+        } else {
+            node.setSymbol(symbol);
         }
 
         if (isArray) {
@@ -168,6 +170,8 @@ public class SemanticAnalyzer {
 
         if (!symbolTable.define(symbol)) {
             errors.add(token.getNum() + " b");
+        } else {
+            node.setSymbol(symbol);
         }
 
         if (isArray) {
@@ -211,6 +215,8 @@ public class SemanticAnalyzer {
 
         if (!symbolTable.define(symbol)) {
             errors.add(token.getNum() + " b");
+        } else {
+            node.setSymbol(symbol);
         }
 
         symbolTable.enterScope();
@@ -265,6 +271,8 @@ public class SemanticAnalyzer {
 
         if (!symbolTable.define(symbol)) {
             errors.add(token.getNum() + " b");
+        } else {
+            node.setSymbol(symbol);
         }
 
         paramsType.add(type);
@@ -299,6 +307,9 @@ public class SemanticAnalyzer {
             AstNode lValNode = node.getChildren().get(0);
             AstNode identNode = lValNode.getChildren().get(0);
             Symbol symbol = symbolTable.lookup(identNode.getToken().getContent());
+            if (symbol != null && !symbol.isFunction()) {
+                lValNode.setSymbol(symbol);
+            }
             Symbol.Type type = null;
             boolean isArray = false;
 
@@ -744,6 +755,8 @@ public class SemanticAnalyzer {
                 return null;
             }
 
+            node.setSymbol(symbol);
+
             List<Symbol.Type> formalTypes = symbol.getParameterTypes();
 
             List<Symbol.Type> actualTypes = new ArrayList<>();
@@ -836,6 +849,9 @@ public class SemanticAnalyzer {
                 return null;
             }
 
+            AstNode lValNode = child.get(0);
+            lValNode.setSymbol(symbol);
+
             boolean isArray = false;
             Symbol.Type type = symbol.getType();
             if (child.get(0).getChildren().size() > 1) {
@@ -880,7 +896,7 @@ public class SemanticAnalyzer {
     }
 
     private void analyzeMainFuncDef(AstNode node) {
-        symbolTable.enterScope();;
+        symbolTable.enterScope();
 
         analyzeBlock(node.getChildren().get(4), Symbol.Type.INT);
         checkReturnType(node.getChildren().get(4), Symbol.Type.INT);

@@ -15,6 +15,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.IrGenerator;
+import ir.IrModule;
+
 public class Compiler {
     public static void main(String[] args) throws Exception {
         String source = Files.readString(
@@ -84,6 +87,13 @@ public class Compiler {
                     );
                     symbolWriter.newLine();
                 }
+            }
+
+            // 中间代码
+            if (errors.isEmpty()) {
+                IrGenerator irGenerator = new IrGenerator(root);
+                IrModule module = irGenerator.generate();
+                Files.writeString(Path.of("llvm_ir.txt"), module.toString(), StandardCharsets.UTF_8);
             }
 
             // 错误输出
